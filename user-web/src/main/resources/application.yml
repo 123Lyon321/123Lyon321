@@ -1,0 +1,47 @@
+server:
+  port: 8080
+  
+spring:
+  application:
+    name: user-service
+  profiles:
+    active: dev
+
+  thymeleaf:
+    cache: false
+
+  redis:
+    port: 6379
+    host: localhost
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  rabbitmq:
+    port: 5672
+
+#mybatis-plus:
+#  mapper-locations: classpath*:/mybatis1/**/*.xml
+
+my:
+  key: 123
+
+
+# eureka 配置
+eureka:
+  client: #将客户端注册到 eureka 服务列表内
+    service-url:
+      defaultZone: http://localhost:8761/eureka  #这个地址是 7001注册中心在 application.yml 中暴露出来额注册地址 （单机版）
+  instance:
+    instance-id: user-service-8080 #自定义服务名称信息
+    prefer-ip-address: true  #显示访问路径的 ip 地址
+
+# spring cloud 使用 Spring Boot actuator 监控完善信息
+# Spring Boot 2.50对 actuator 监控屏蔽了大多数的节点，只暴露了 heath 节点，本段配置（*）就是为了开启所有的节点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"   # * 在yaml 文件属于关键字，所以需要加引号
+logging:
+  level:
+    '[com.hj.dao]': info
